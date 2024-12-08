@@ -9,7 +9,7 @@ const BudgetProgress = () => {
   return (
     <div className="alert alert-primary py-2 px-8">
       <Label className={"text-md"}>
-        Progreso del presupuesto ${Math.ceil(progress)}%
+        Progreso del presupuesto {Math.ceil(progress)}%
       </Label>
       <Progress value={progress} />
     </div>

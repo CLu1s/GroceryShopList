@@ -21,7 +21,7 @@ const List = () => {
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         />
-        <Button type="button" size={"sm"}>
+        <Button type="button" size={"sm"} onClick={() => setFilter("")}>
           <X />
         </Button>
       </div>
@@ -30,7 +30,7 @@ const List = () => {
           No hay elementos para mostrar
         </strong>
       ) : (
-        <ScrollArea className={"h-[400px]"}>
+        <ScrollArea className={"h-[calc(100vh-470px)]"}>
           <ul className={"flex flex-col gap-4"}>
             {filters.map((item) => (
               <li key={item.id}>
