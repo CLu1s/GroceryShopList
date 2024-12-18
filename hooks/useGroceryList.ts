@@ -10,6 +10,7 @@ const useGroceryList = () => {
     items,
     deleteItem,
     setElementToEdit,
+    clearItems,
   } = useContext(ShoppingListContext);
 
   const total = items.reduce(
@@ -35,6 +36,7 @@ const useGroceryList = () => {
     setElementToEdit,
     findItemByName,
     budget: BUDGET,
+    clearItems,
   };
 };
 

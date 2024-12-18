@@ -1,11 +1,12 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm, Resolver } from "react-hook-form";
 import { ShoppingListContext } from "@/contexts/ShoppingListContext";
 import { Label } from "@/components/ui/label";
 import { nanoid } from "nanoid";
+import { Minus, Plus } from "lucide-react";
 
 type FormValues = {
   product: string;
@@ -37,6 +38,7 @@ const resolver: Resolver<FormValues> = async (values) => {
 const NewItem = () => {
   const { setItems, elementToEdit, updateItem } =
     useContext(ShoppingListContext);
+  const [quantity, setQuantity] = useState(1);
   const {
     register,
     handleSubmit,
@@ -46,23 +48,23 @@ const NewItem = () => {
   useEffect(() => {
     if (elementToEdit) {
       reset(elementToEdit);
+      setQuantity(elementToEdit.quantity);
     }
   }, [elementToEdit]);
   const onSubmit = handleSubmit((data) => {
+    const dataToSubmit = {
+      ...data,
+      quantity,
+      id: elementToEdit ? elementToEdit.id : nanoid(),
+      product: data.product.trim(),
+    };
     if (elementToEdit) {
-      updateItem({
-        ...data,
-        id: elementToEdit.id,
-        product: data.product.trim(),
-      });
+      updateItem(dataToSubmit);
     } else {
-      setItems({
-        ...data,
-        id: nanoid(),
-        product: data.product.trim(),
-      });
+      setItems(dataToSubmit);
     }
     reset(defaultValues);
+    setQuantity(1);
   });
   return (
     <form onSubmit={onSubmit} className={"flex flex-col gap-4"}>
@@ -85,12 +87,31 @@ const NewItem = () => {
           </div>
           <div>
             <Label htmlFor={"quantity"}>Cantidad</Label>
-            <Input
-              {...register("quantity")}
-              type={"number"}
-              placeholder="Cantidad"
-              defaultValue={1}
-            />
+            <div className={"flex gap-2"}>
+              <Button
+                type={"button"}
+                onClick={() => {
+                  setQuantity(quantity - 1);
+                }}
+              >
+                <Minus />
+              </Button>
+              <Input
+                {...register("quantity")}
+                type={"number"}
+                placeholder="Cantidad"
+                value={quantity}
+                className={"w-12"}
+              />
+              <Button
+                type={"button"}
+                onClick={() => {
+                  setQuantity(quantity + 1);
+                }}
+              >
+                <Plus />
+              </Button>
+            </div>
           </div>
         </div>
       </div>

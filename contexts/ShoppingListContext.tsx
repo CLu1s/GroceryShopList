@@ -6,20 +6,25 @@ type Item = {
   price: number;
   quantity: number;
 };
-const ShoppingListContext = createContext({
-  items: [],
-  setItems: () => {},
-  deleteItem: () => {},
-  elementToEdit: null,
-  updateItem: () => {},
-  setElementToEdit: () => {},
-} as {
+
+type Context = {
   items: Item[];
   setItems: (items: Item) => void;
   deleteItem: (id: string) => void;
   elementToEdit: Item | null;
   updateItem: (item: Item) => void;
   setElementToEdit: (item: Item) => void;
+  clearItems: () => void;
+};
+
+const ShoppingListContext = createContext<Context>({
+  items: [],
+  setItems: () => {},
+  deleteItem: () => {},
+  elementToEdit: null,
+  updateItem: () => {},
+  setElementToEdit: () => {},
+  clearItems: () => {},
 });
 
 type Props = {
@@ -45,6 +50,10 @@ const ShoppingListProvider = ({ children }: Props) => {
     setElementToEdit(null);
   };
 
+  const clearItems = () => {
+    setItems([]);
+  };
+
   return (
     <ShoppingListContext.Provider
       value={{
@@ -54,6 +63,7 @@ const ShoppingListProvider = ({ children }: Props) => {
         elementToEdit,
         setElementToEdit,
         updateItem,
+        clearItems,
       }}
     >
       {children}
