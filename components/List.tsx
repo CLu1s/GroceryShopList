@@ -14,7 +14,7 @@ const List = () => {
     useGroceryList();
   const filters = findItemByName(filter) || items;
   return (
-    <div className={"border bg-white  flex flex-col gap-2  px-8 py-4 pb-1"}>
+    <div className={"border bg-white  flex flex-col gap-2  px-2 py-4 pb-1"}>
       <div className="flex w-full max-w-sm items-center space-x-2">
         <Input
           placeholder={"Buscar producto"}
@@ -25,19 +25,19 @@ const List = () => {
           <X />
         </Button>
       </div>
-      {filters.length === 0 ? (
+      {filters.reverse().length === 0 ? (
         <strong className={"text-lg p-9 text-gray-600 text-center"}>
           No hay elementos para mostrar
         </strong>
       ) : (
-        <ScrollArea className={"h-[calc(100vh-470px)]"}>
-          <ul className={"flex flex-col gap-4"}>
+        <ScrollArea className={"h-[calc(100vh-510px)]"}>
+          <ul className={"flex flex-col gap-1"}>
             {filters.map((item) => (
               <li key={item.id}>
                 <Card>
-                  <CardContent className={"py-4 px-2"}>
-                    <div className={"flex flex-col justify-between gap-4 "}>
-                      <div className={"flex justify-between"}>
+                  <CardContent className={"py-1 px-1"}>
+                    <div className={"flex justify-between gap-0 "}>
+                      <div className={"w-[118px] flex justify-between"}>
                         <p
                           className={
                             "text-md font-semibold flex flex-col justify-center "
@@ -45,23 +45,8 @@ const List = () => {
                         >
                           {item.product}
                         </p>
-                        <div className={"flex gap-2"}>
-                          <Button
-                            size={"sm"}
-                            onClick={() => setElementToEdit(item)}
-                          >
-                            <Pencil />
-                          </Button>
-                          <Button
-                            size={"sm"}
-                            onClick={() => deleteItem(item.id)}
-                            variant={"destructive"}
-                          >
-                            <Trash2 />
-                          </Button>
-                        </div>
                       </div>
-                      <div className={"flex justify-between"}>
+                      <div className={"flex justify-between gap-1"}>
                         <p className={" flex flex-col justify-center"}>
                           {formatMoney(item.price)} x {item.quantity}
                         </p>
@@ -70,6 +55,21 @@ const List = () => {
                             {formatMoney(item.quantity * item.price)}
                           </p>
                         </div>
+                      </div>
+                      <div className={"flex gap-2"}>
+                        <Button
+                          size={"sm"}
+                          onClick={() => setElementToEdit(item)}
+                        >
+                          <Pencil />
+                        </Button>
+                        <Button
+                          size={"sm"}
+                          onClick={() => deleteItem(item.id)}
+                          variant={"destructive"}
+                        >
+                          <Trash2 />
+                        </Button>
                       </div>
                     </div>
                   </CardContent>

@@ -10,13 +10,13 @@ import { Minus, Plus } from "lucide-react";
 
 type FormValues = {
   product: string;
-  price: number;
+  price: number | string;
   quantity: number;
 };
 
 const defaultValues: FormValues = {
   product: "",
-  price: 0,
+  price: "",
   quantity: 1,
 };
 
@@ -54,6 +54,7 @@ const NewItem = () => {
   const onSubmit = handleSubmit((data) => {
     const dataToSubmit = {
       ...data,
+      price: typeof data.price === "string" ? parseInt(data.price) : data.price,
       quantity,
       id: elementToEdit ? elementToEdit.id : nanoid(),
       product: data.product.trim(),

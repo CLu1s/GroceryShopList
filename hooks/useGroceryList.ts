@@ -24,7 +24,7 @@ const useGroceryList = () => {
   };
 
   return {
-    items,
+    items: items.reverse(),
     setItems,
     elementToEdit,
     updateItem,
